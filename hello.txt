@@ -1,0 +1,9 @@
+Hello, Igor!
+
+This is my Git Homework.
+This repository was created in GitHub
+and it excellent opens from there with PC
+if you make some changes in settings)
+
+See you at the lessons.
+Enjoy your day!
