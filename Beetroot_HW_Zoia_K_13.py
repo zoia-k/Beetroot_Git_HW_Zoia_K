@@ -67,14 +67,13 @@ def remove_negatives(nums):
 
 
 def choose_func(num_list, func1, func2):
-    for num in num_list:
-        if num < 0:
-            func2(num_list)
+
+    min_num = min(num_list)
+    if min_num < 0:
+        func2(num_list)
     else:
         func1(num_list)
 
 
-
-
-#choose_func([1, 2, 3, 4, 5], square_nums, remove_negatives)
+# choose_func([1, 2, 3, 4, 5], square_nums, remove_negatives)
 choose_func([1, -2, 3, -4, 5], square_nums, remove_negatives)
