@@ -80,11 +80,12 @@ def arg_rules(type_, max_length, contains):
             if type(arg) != type_:
                 raise TypeError('Argument is not a string!')
 
-            elif len(arg) > max_length:
+            if len(arg) > max_length:
                 raise ValueError('Maximum length is 15!')
 
-            elif contains[0] not in arg or contains[1] not in arg:
-                raise ValueError("Symbols '05' and '@' must be included !")
+            for symbol in contains:
+                if symbol not in arg:
+                    raise ValueError(f"Symbol {symbol} must be included !")
 
             else:
                 return func(arg)
@@ -98,6 +99,8 @@ def arg_rules(type_, max_length, contains):
 def create_slogan(name: str) -> str:
     return f"{name} drinks pepsi in his brand new BMW!"
 
+
+create_slogan('john05gmail.com')
 
 assert create_slogan('johndoe05@gmail.com') is False
 
