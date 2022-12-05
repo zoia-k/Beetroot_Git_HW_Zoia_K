@@ -33,6 +33,7 @@ def square_all(*args):
 
 square_all(1, 2, 3, 4)
 
+
 # Task 2
 # Write a decorator that takes a list of stop words
 # and replaces them with * inside the decorated function
@@ -61,3 +62,43 @@ def create_slogan(name: str) -> str:
 assert create_slogan("Steve") == "Steve drinks * in his brand new *!"
 assert create_slogan("Jane") == "Jane drinks * in his brand new *!"
 
+
+# Task 3
+
+# Write a decorator `arg_rules` that validates arguments passed to the function.
+# A decorator should take 3 arguments:
+# max_length: 15
+# type_: str
+# contains: [] - list of symbols that an argument should contain
+# If some of the rules' checks returns False, the function should return False
+# and print the reason it failed; otherwise, return the result.
+
+
+def arg_rules(type_, max_length, contains):
+    def take_func(func):
+        def check_args(arg):
+            if type(arg) != type_:
+                raise TypeError('Argument is not a string!')
+
+            elif len(arg) > max_length:
+                raise ValueError('Maximum length is 15!')
+
+            elif contains[0] not in arg or contains[1] not in arg:
+                raise ValueError("Symbols '05' and '@' must be included !")
+
+            else:
+                return func(arg)
+
+        return check_args
+
+    return take_func
+
+
+@arg_rules(type_=str, max_length=15, contains=['05', '@'])
+def create_slogan(name: str) -> str:
+    return f"{name} drinks pepsi in his brand new BMW!"
+
+
+assert create_slogan('johndoe05@gmail.com') is False
+
+assert create_slogan('S@SH05') == 'S@SH05 drinks pepsi in his brand new BMW!'
