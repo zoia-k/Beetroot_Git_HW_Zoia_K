@@ -73,11 +73,12 @@ class TVController:
         self.number = 0
 
     def first_channel(self):
-        return self.channels[0]
+        self.number = 0
+        return self.channels[self.number]
 
     def last_channel(self):
-        self.number = len(self.channels)
-        return self.channels[-1]
+        self.number = len(self.channels)-1
+        return self.channels[self.number]
 
     def turn_channel(self, num):
         self.number = num - 1
