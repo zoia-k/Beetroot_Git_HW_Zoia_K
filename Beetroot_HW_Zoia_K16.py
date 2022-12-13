@@ -228,3 +228,29 @@ s.add(p2, 300)
 s.sell_product('Ramen', 10)
 
 assert s.get_product_info('Ramen') == ('Ramen', 290)
+
+
+# Task 4
+''' 
+Custom exception
+
+Create your custom exception named `CustomException`, you can inherit from base Exception class,
+but extend its functionality to log every error message to a file named `logs.txt`. 
+Tips: Use __init__ method to extend functionality for saving messages to file
+
+'''
+
+
+class CustomException(Exception):
+    def __init__(self, msg):
+        super().__init__(msg)
+        with open("logs.txt", 'a') as f:
+            f.write(msg + "\n")
+
+
+try:
+    raise CustomException("test text")
+except CustomException:
+    pass
+
+raise CustomException("test text 2")
