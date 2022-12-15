@@ -138,3 +138,65 @@ print(library)
 print(library.group_by_author('Stiven King'))
 print(library.group_by_year(1983))
 print(library.group_by_year(1999))
+
+
+# Task 3
+
+# Fraction
+
+# Створіть клас Fraction, який буде представляти всю базову арифметичну логіку для дробів (+, -, /, *)
+# з належною перевіркою й обробкою помилок. Потрібно додати магічні методи для математичних операцій
+# та операції порівняння між об'єктами класу Fraction
+import math
+
+
+class Fraction:
+
+    def __init__(self, numerator: int, denominator: int):
+        if denominator == 0:
+            raise ZeroDivisionError('Denominator cannot be 0! Division on 0 is impossible')
+        self.numerator = numerator
+        self.denominator = denominator
+
+    def __add__(self, other):
+        com_denominator = self.lsm(self.denominator, other.denominator)
+        new_numerator = self.numerator * com_denominator // self.denominator + other.numerator * com_denominator // other.denominator
+        return self.normalized(new_numerator, com_denominator)
+
+    def __sub__(self, other):
+        com_denominator = self.lsm(self.denominator, other.denominator)
+        new_numerator = self.numerator * com_denominator // self.denominator - other.numerator * com_denominator // other.denominator
+        return self.normalized(new_numerator, com_denominator)
+
+    def __mul__(self, other):
+        new_numerator = self.numerator * other.numerator
+        new_denominator = self.denominator * other.denominator
+        return self.normalized(new_numerator, new_denominator)
+
+    def __truediv__(self, other):
+        if other.numerator == 0:
+            raise ZeroDivisionError('Denominator cannot be 0! Division on 0 is impossible')
+        new_numerator = self.numerator * other.denominator
+        new_denominator = self.denominator * other.numerator
+        return self.normalized(new_numerator, new_denominator)
+
+    def lsm(self, numerator, denominator):
+        return (numerator * denominator) // math.gcd(numerator, denominator)
+
+    def normalized(self, numerator, denominator):
+        multiplicity = math.gcd(numerator, denominator)
+        return Fraction(numerator // multiplicity, denominator // multiplicity)
+
+    def __eq__(self, other):
+        a = self.normalized(self.numerator, self.denominator)
+        b = self.normalized(other.numerator, other.denominator)
+        return a.numerator == b.numerator and a.denominator == b.denominator
+
+
+if __name__ == "__main__":
+    x = Fraction(1, 2)
+    y = Fraction(1, 4)
+    assert x + y == Fraction(3, 4)
+    assert x - y == Fraction(1, 4)
+    assert x * y == Fraction(1, 8)
+    assert x / y == Fraction(2, 1)
