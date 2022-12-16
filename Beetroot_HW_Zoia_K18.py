@@ -47,5 +47,7 @@ class Validator:
             if symbol == '.' or symbol == '_':
                 raise SyntaxError(f'Domen name cannot contains "{symbol}"')
 
+        print(f'Email "{email}" is valid')
 
-Validator('AB.yz@ma_il.com')
+
+Validator('AB.yz@mail.com')
